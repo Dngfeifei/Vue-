@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>vue事件方法修饰符</title>
+	</head>
+	<body>
+		<!--
+        	作者：18232581189@163.com
+        	时间：2018-08-20
+        	描述：修饰符
+       -->
+       <div id="app" @click="handle1" @click.capture="handle(1)">
+       		<a href="" @click.stop>a</a>
+       		<form action="" @click.stop="handle" @submit.prevent>
+       			<input type="submit" class="type" value="提交"/>
+       		</form>
+       </div>
+        
+		<script src="js/vue.js"></script>
+		<script>
+			var app = new Vue({
+				el:'#app',
+				data:{},
+				methods:{
+					handle1:function(){
+						alert(1);
+					},
+					handle:function(e){
+						console.log(e);
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

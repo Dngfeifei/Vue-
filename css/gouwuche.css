@@ -1,0 +1,45 @@
+@charset "utf-8";
+body,h1,h2,h3,h4,img,dl,table,th,tr,td,ul,li,dd,dt,p{
+	margin: 0;
+	padding: 0;
+}
+html,body{
+	width: 100%;
+	height: 100%;
+	font-family: "微软雅黑";
+}
+[v-cloak]{
+	display: none;
+}
+
+.table{
+	width: 50%;
+	height: 50%;
+	border: 1px solid black;
+	border-collapse: collapse;
+	border-spacing: 0;
+	empty-cells: show;
+	
+}
+.table tr,.table td{
+	padding: 8px 16px;
+	border: 1px solid #e9e9e9;
+	text-align: left;
+}
+.table tr td:nth-child(1){
+	text-align: center;
+}
+.table thead th{
+	height: 50px;
+	text-align: center;
+	border: 1px solid #e9e9e9;
+	background-color: #eee;
+	font-size: 16px;
+	font-weight: 600;
+	color: black;
+	white-space: nowrap;
+}
+.table tbody tr td:nth-child(5) button{
+	display: block;
+	margin: 0 auto;
+}

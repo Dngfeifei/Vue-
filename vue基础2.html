@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>绑定class的方式</title>
+	</head>
+	<body>
+		<!--
+        	作者：18232581189@163.com
+        	时间：2018-08-16
+        	描述：对象语法 数组语法  绑定class sytle
+        -->
+		<div id="app">
+			<div :class="{'active':isActive}">对象语法：基础用法{{isActive}}</div>
+			<div :class="classes1" :style="styles()">对象语法：计算属性{{classes1}}</div>
+			<div :class="classes()" :style="styles1">利用methods方法绑定class，如果methos中包含和计算属性中同样的属性名称，则原有计算属性不可使用</div>
+		</div>
+		<script src="js/vue.js"></script>
+		<script type="text/javascript">
+			var app = new Vue({
+				el: '#app',
+				data:{
+					isActive:true,
+					size:'bord',
+					disabled:true,
+					fontSize:"14px",
+					backgroundColor:"red",
+				},
+				computed:{
+					classes1:function(){
+						return {
+							"active":this.isActive,
+							 "large": this.disabled
+						}
+					},
+					styles1:function(){
+						return {
+							fontSize:"16px",
+							color:"green",
+							backgroundColor:this.backgroundColor
+						}
+					}
+				},
+				methods:{
+					classes:function(){
+						return {
+							"active1":this.isActive,
+							 [this.size + '_']: this.disabled
+						}
+					},
+					styles:function(){
+						return [
+							{fontSize:"18px",backgroundColor:"orange"},
+							{lineHeight:"80px",[this.size+"er"]:'1px solid red'}
+						]
+					}
+				}
+				
+			})
+		</script>
+	</body>
+</html>

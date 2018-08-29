@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>vue实例、双向数据绑定、生命周期、插值与表达式</title>
+	</head>
+	<body>
+		<!--
+        	作者：18232581189@163.com
+        	时间：2018-08-15
+        	描述：vue双向数据绑定，指令 v-model 为双向绑定指令 
+        -->
+		<div id="app">
+			<input type="text" v-model="name" placeholder="输入你的名字" name="" id="" value="" />
+			<h1>你好，{{ name }}</h1>
+		</div>
+		<!--
+        	作者：18232581189@163.com
+        	时间：2018-08-15
+        	描述：v-html 输出HTML  v-pre 输出不进行编译文本   {{}}可进行简单的运算、三元运算
+        -->
+		<div id="app2">
+			{{a}}
+			<span v-html="link"></span>
+			<span v-pre>{{link}}</span>
+			{{b/10}}
+			{{isN ? '确定' : '取消'}}
+		</div>
+		<!--
+        	作者：18232581189@163.com
+        	时间：2018-08-15
+        	描述：过滤器 filters 管道符  |  
+        -->
+        <div id="app3">
+        	{{date | formatDate}}
+        	{{a | formatA('2',3)}}
+        </div>
+        <!--
+        	作者：18232581189@163.com
+        	时间：2018-08-15
+        	描述：指令事件  v- 例如v-if判断 v-for 循环插入      v-bind 更新HTML元素上的属性，v-on 为DOM元素绑定事件
+        -->
+        <div id="app4">
+        	<a v-bind:href="url">连接</a>
+        	<img v-bind:src="imgUrl" alt="图片" />图片路径{{imgUrl}}
+        	<p v-if="isShow">显示文本</p>
+        	<button v-on:click="close(false)">点击点击隐藏</button>
+        </div>
+        <!--
+        	作者：18232581189@163.com
+        	时间：2018-08-15
+        	描述：计算属性 置于 Vue实例的 computed 内，计算属性不是函数，所以不能进行传参，计算属性声明之后相当于Vue实例的一个属性值
+        -->
+        <div id="app5">{{repontext}}</div>
+		<script src="js/vue.js"></script>
+		<script type="text/javascript">
+			var app = new Vue({
+				el:"#app",
+				data:{
+					name:"",
+				}
+			})
+			var app2 = new Vue({
+				el:'#app2',
+				data:{
+					a:2,
+					link:'<a href="###">我是一个连接</a>',
+					b:100,
+					isN:false
+				},
+				created:function(){
+					console.log(this.a);
+				},
+				mounted:function(){
+					console.log(this.$el);
+				}
+			})
+			var padDate = function(value){
+				return value < 10 ? "0" + value : value;
+			}
+			var app3 = new Vue({
+				el:'#app3',
+				data:{
+					date: new Date(),
+					a: 100
+				},
+				filters: {
+					formatDate:function(value){
+						var date = new Date(value);
+						var year = date.getFullYear(),
+						    mouth = padDate(date.getMonth()+1),
+						    day = padDate(date.getDay()),
+						    hour = padDate(date.getHours()),
+						    min = padDate(date.getMinutes()),
+						    sec = padDate(date.getSeconds());
+						    return year + "-" + mouth + "-" + day + " " + hour + ":" + min + ":" + sec;
+					},
+					formatA:function (value,arg2,arg3){
+						return value/10 + arg2 + arg3;
+					},
+					formatB:function(value){
+						return value/10;
+					}
+				},
+				mounted:function(){
+					var _this = this;
+					this.timer = setInterval(function(){
+						_this.date = new Date();
+					},1000);
+				},
+				beforeDestroy:function(){
+					if(this.timer) 
+					clearInterval(this.timer);
+				}
+				
+			})
+			var app4 = new Vue({
+				el:'#app4',
+				data:{
+					url:"http://www.baidu.com",
+					imgUrl:"http://www.baidu.com",
+					isShow: true,
+				},
+				methods:{
+					close:function(value){
+						this.isShow =value;
+					}
+				}
+			})
+			var app5 = new Vue({
+				el: '#app5',
+				data:{
+					a:100
+				},
+				computed:{
+					repontext:function (){
+						return Date.now();
+					},
+					repontext2:function(){
+						return this.repontext-5;    //计算属性相互依赖
+					}
+				},
+				methods:{
+					re:function(){
+						return this.a/20;
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>内置指令1</title>
+		<style type="text/css">
+			[v-cloak] {
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<!--
+        	作者：18232581189@163.com
+        	时间：2018-08-16
+        	描述：内置指令 v-   v-cloak  简单项目里解决初加载屏幕闪动问题，v-once 也不需要表达式，定义元素组件只加载一次，不随数据变化而变化
+        -->
+		<div id="app" v-cloak>
+			{{message}}
+			<p v-if="isShow">第一段v-if</p>
+			<p v-else-if="format">第二段v-else-if</p>
+			<p v-else="format2(9)">我是第三段</p>
+		</div>
+		<!--
+        	作者：18232581189@163.com
+        	时间：2018-08-20
+        	描述：Vue在渲染元素时会尽可能的重复利用已有的元素，而非重新渲染
+        -->
+        <div id="app2">
+        	<template v-if="type === 'name'">
+        		<label for="">用户名</label>
+        		<input type="text" placeholder="输入用户名"  / >
+        	</template>
+        	<template v-else>
+        		<label for="">邮箱</label>
+        		<input type="text" placeholder="输入邮箱" />
+        	</template>
+        	<button @click="handToggle">切换输入类型</button>
+        </div>
+        <!--
+        	作者：18232581189@163.com
+        	时间：2018-08-20
+        	描述：v-for 循环指令
+        -->
+        <div id="app3">
+        	<ul>
+        		<li v-for="(book,index),book in books">{{index}}*{{book.name}}={{book.money}}</li>
+        	</ul>
+        </div>
+		<script src="js/vue.js"></script>
+		<script>
+			var app = new Vue({
+				el:'#app',
+				data:{
+					message:"这是一段文本",
+					isShow: false,
+					a:100,
+					b:10
+				},
+				computed:{
+					format:function(){
+						return this.a/this.b-10;
+					}
+				},
+				methods:{
+					format2:function(value){
+						return this.a/this.b - value;
+					}
+				}
+			})
+			var app2 = new Vue({
+				el:'#app2',
+				data:{
+					type:"name"
+				},
+				methods:{
+					handToggle:function(){
+						this.type = this.type == 'name' ? 'mail' : 'name';
+					}
+				}
+			})
+			var app3 = new Vue({
+				el:'#app3',
+				data:{
+					books:[
+						{name:"《vue实战》",money:"$60"},
+						{name:"《vue实战2》",money:"$70"},
+						{name:"《vue实战3》",money:"$80"}
+						]
+				}
+			})
+		</script>
+	</body>
+</html>
